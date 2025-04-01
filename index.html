@@ -12,7 +12,7 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, white, black, red);
             background-size: 400% 400%;
@@ -23,13 +23,13 @@
             justify-content: center;
             padding: 2rem 0;
         }
-        
+
         @keyframes gradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
+
         .container {
             text-align: center;
             background-color: rgba(255, 255, 255, 0.1);
@@ -42,19 +42,19 @@
             width: 90%;
             max-width: 1200px;
         }
-        
+
         @keyframes scaleIn {
             from { transform: scale(0); }
             to { transform: scale(1); }
         }
-        
+
         h1 {
             color: white;
             margin-bottom: 1.5rem;
             font-size: 2.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        
+
         p {
             color: white;
             margin-bottom: 2rem;
@@ -63,7 +63,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         .photos-container {
             display: flex;
             justify-content: space-around;
@@ -71,7 +71,7 @@
             gap: 2rem;
             margin-top: 3rem;
         }
-        
+
         .photo-card {
             background-color: rgba(255, 255, 255, 0.15);
             border-radius: 15px;
@@ -85,11 +85,11 @@
             align-items: center;
             text-align: center;
         }
-        
+
         .photo-card:hover {
             transform: translateY(-10px);
         }
-        
+
         .photo {
             width: 200px;
             height: 200px;
@@ -99,14 +99,14 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             display: block;
         }
-        
+
         .photo-title {
             color: white;
             font-size: 1.5rem;
             margin-bottom: 1rem;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
-        
+
         /* Social Button Styles */
         .social-buttons {
             display: flex;
@@ -115,7 +115,7 @@
             margin-top: 1.5rem;
             flex-wrap: wrap;
         }
-        
+
         .social-button {
             width: 50px;
             height: 50px;
@@ -131,7 +131,7 @@
             transform-style: preserve-3d;
             transform: perspective(1000px);
         }
-        
+
         .social-button::before {
             content: '';
             position: absolute;
@@ -143,16 +143,16 @@
             transform: translateZ(-10px);
             transition: transform 0.3s ease;
         }
-        
+
         .social-button:hover {
             transform: perspective(1000px) translateZ(10px) scale(1.1);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
-        
+
         .social-button:active {
             transform: perspective(1000px) translateZ(0) scale(0.95);
         }
-        
+
         /* Social Platform Colors */
         .twitter { background: #1DA1F2; }
         .instagram { background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); }
@@ -165,13 +165,13 @@
         .pinterest { background: #BD081C; }
         .tiktok { background: #000000; }
         .whatsapp { background: green; }
-        
+
         .social-button i {
             color: white;
             font-size: 1.5rem;
             transform: translateZ(20px);
         }
-        
+
         /* Button Style */
         .myButton {
             box-shadow: inset 0px -6px 0px 0px #dcecfb;
@@ -189,17 +189,17 @@
             text-decoration: none;
             text-shadow: 0px 1px 0px #528ecc;
         }
-        
+
         .myButton:hover {
             background: linear-gradient(to bottom, black 5%, white 100%);
             background-color: #80b5ea;
         }
-        
+
         .myButton:active {
             position: relative;
             top: 1px;
         }
-        
+
         /* Welcome Animation */
         .surprise {
             position: fixed;
@@ -215,7 +215,7 @@
             z-index: 999;
             animation: fadeOut 1s forwards 2.5s;
         }
-        
+
         @keyframes fadeOut {
             from { opacity: 1; }
             to { 
@@ -223,7 +223,7 @@
                 visibility: hidden;
             }
         }
-        
+
         @keyframes emojiIn {
             from {
                 opacity: 0;
@@ -234,7 +234,7 @@
                 transform: scale(1) rotate(0deg);
             }
         }
-        
+
         .confetti {
             position: absolute;
             width: 10px;
@@ -242,7 +242,7 @@
             background-color: #f00;
             opacity: 0;
         }
-        
+
         /* Music Controls */
         .music-controls {
             position: fixed;
@@ -256,7 +256,7 @@
             border-radius: 30px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
-        
+
         .music-controls button {
             background: none;
             border: none;
@@ -271,11 +271,11 @@
             border-radius: 50%;
             transition: all 0.3s ease;
         }
-        
+
         .music-controls button:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
-        
+
         .music-info {
             color: white;
             margin: 0 10px;
@@ -285,7 +285,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        
+
         /* Real-Time Clock Styles */
         .clock-container {
             position: fixed;
@@ -302,7 +302,7 @@
             align-items: center;
             backdrop-filter: blur(5px);
         }
-        
+
         .clock {
             color: white;
             font-size: 0.5rem;
@@ -310,193 +310,76 @@
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             margin-bottom: 3px;
         }
-        
+
         .date {
             color: #f0f0f0;
             font-size: 0.2rem;
         }
-        
+
         /* Responsive Styles */
         @media (max-width: 992px) {
             .photos-container {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .photo-card {
                 max-width: 100%;
             }
         }
-        
+
         @media (max-width: 768px) {
             .container {
                 width: 95%;
                 padding: 1.5rem;
             }
-            
+
             h1 {
                 font-size: 2rem;
             }
-            
+
             .social-button {
                 width: 40px;
                 height: 40px;
             }
-            
+
             .social-button i {
                 font-size: 1.2rem;
             }
-            
+
             .welcome-text {
                 font-size: 2.5rem;
             }
-            
+
             .emoji {
                 font-size: 3rem;
             }
-            
+
             .music-controls {
                 bottom: 10px;
                 right: 10px;
                 padding: 8px;
             }
-            
+
             .music-controls button {
                 width: 40px;
                 height: 20px;
                 font-size: 18px;
             }
-            
+
             .music-info {
                 font-size: 12px;
                 max-width: 100px;
             }
-            
+
             .clock {
                 font-size: 1.5rem;
             }
-            
+
             .date {
                 font-size: 0.8rem;
             }
         }
-
-    
-    .testimonial:before {
-        content: '"';
-        font-size: 5rem;
-        color: rgba(255,255,255,0.1);
-        position: absolute;
-        top: -20px;
-        left: 20px;
-        font-family: Georgia, serif;
-    }
-    
-    .testimonial-rating {
-        margin-bottom: 1rem;
-    }
-    
-    .testimonial-rating i {
-        color: gold;
-        margin: 0 2px;
-    }
-    
-    .testimonial-text {
-        color: white;
-        font-style: italic;
-        margin-bottom: 1rem;
-        font-size: 1.1rem;
-        line-height: 1.6;
-    }
-    
-    .testimonial-author {
-        color: white;
-        font-weight: 500;
-    }
-    
-    /* FAQ Section */
-    .faq-section {
-        margin: 4rem 0 2rem;
-    }
-    
-    .faq-title {
-        color: white;
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
-    }
-    
-    .faq-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    
-    .faq-item {
-        background: rgba(255,255,255,0.05);
-        border-radius: 10px;
-        margin-bottom: 1rem;
-        overflow: hidden;
-        transition: all 0.3s ease;
-    }
-    
-    .faq-question {
-        padding: 1.2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        color: white;
-        font-weight: 500;
-    }
-    
-    .faq-question i {
-        transition: all 0.3s ease;
-    }
-    
-    .faq-answer {
-        max-height: 0;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        padding: 0 1.2rem;
-    }
-    
-    .faq-answer p {
-        color: #d1d1d1;
-        padding-bottom: 1.2rem;
-        margin: 0;
-    }
-    
-    .faq-item.active .faq-question i {
-        transform: rotate(180deg);
-    }
-    
-    .faq-item.active .faq-answer {
-        max-height: 200px;
-    }
-    
-    /* Responsive Styles */
-    @media (max-width: 992px) {
-        .pro-card {
-            transform: scale(1);
-        }
-        
-        .pro-card:hover {
-            transform: translateY(-10px);
-        }
-    }
-    
-    @media (max-width: 768px) {
-        .subscription-title {
-            font-size: 2rem;
-        }
-        
-        .subscription-subtitle {
-            font-size: 1rem;
-        }
-        
-        .faq-title {
-            font-size: 1.5rem;
-        }
-    }
 
     </style>
 </head>
@@ -505,7 +388,7 @@
     <audio id="background-music" loop>
         <source src="1.mp3" type="audio/mpeg">
     </audio>
-    
+
     <!-- Music Controls -->
     <div class="music-controls">
         <button id="play-pause-btn">
@@ -516,14 +399,14 @@
             <i class="fas fa-volume-up" id="volume-icon"></i>
         </button>
     </div>
-    
+
     <!-- Real-Time Clock -->
     <div class="clock-container">
         <div id="clock" class="clock">00:00:00</div>
         <div id="date" class="date">Monday, March 31, 2025</div>
     </div>
-    
-    
+
+
     <!-- Main Content -->
     <div class="container">
         <h1>Thank you for visiting us</h1>
@@ -533,7 +416,7 @@
         <p>
             これは私たちの個人的なウェブサイトですので、ご希望の場合はご連絡ください。
         </p>
-        
+
         <!-- Photos Container with Social Media -->
         <div class="photos-container">
             <!-- Left Photo with Social Media -->
@@ -541,7 +424,7 @@
                 <img src="ardy.jpg" alt="Professional Photo" class="photo">
                 <h3 class="photo-title">Ardy L G Sihombing</h3>
                 <p>1 Timotius 4:12 (TB)<br>Jangan seorang pun menganggap engkau rendah karena engkau muda. Jadilah teladan bagi orang-orang percaya, dalam perkataanmu, dalam tingkah lakumu, dalam kasihmu, dalam kesetiaanmu dan dalam kesucianmu.</p>
-                
+
                 <!-- Social Media for Left Photo -->
                 <div class="social-buttons">
                     <a href="https://www.facebook.com/profile.php?id=61573416713648" class="social-button facebook">
@@ -562,13 +445,13 @@
                     <a href="hbdardy.html" class="myButton">HBD<br>09-04-2006</a>
                 </div>
             </div>
-            
+
             <!-- Right Photo with Social Media -->
             <div class="photo-card">
                 <img src="helmy.jpg" alt="Personal Photo" class="photo">
                 <h3 class="photo-title">Helmy R Tampubolon</h3>
                 <p>Roma 10:12 (TB)<br>Sebab tidak ada perbedaan antara orang Yahudi dan orang Yunani. Karena, Allah yang satu itu adalah Tuhan dari semua orang, kaya bagi semua orang yang berseru kepada-Nya.</p>
-                
+
                 <!-- Social Media for Right Photo -->
                 <div class="social-buttons">
                     <a href="https://www.facebook.com/profile.php?id=100042542872095" class="social-button facebook">
@@ -586,126 +469,9 @@
                     <a href="hbdhelmy.html" class="myButton">HBD<br>30-11-2005</a>
                 </div>
             </div>
-<!-- Premium & Pro Subscription Section -->
-<section class="subscription-section">
-    <div class="subscription-container">
-        <h2 class="subscription-title">Upgrade Your Experience</h2>
-        <p class="subscription-subtitle">Choose the plan that fits your needs</p>
-        
-        <div class="billing-toggle">
-            <span class="billing-text">Monthly</span>
-            <label class="switch">
-                <input type="checkbox" id="billing-toggle">
-                <span class="slider round"></span>
-            </label>
-            <span class="billing-text">Yearly <span class="save-badge">Save 20%</span></span>
-        </div>
-        
-        <div class="subscription-cards">
-            <!-- Premium Plan -->
-            <div class="subscription-card premium-card">
-                <div class="card-header">
-                    <div class="plan-badge">POPULAR</div>
-                    <h3 class="plan-title">Premium</h3>
-                    <div class="price-container">
-                        <p class="price monthly-price">Rp 99.000<span>/month</span></p>
-                        <p class="price yearly-price">Rp 950.000<span>/year</span></p>
-                    </div>
-                    <p class="card-description">Enhanced features for dedicated users</p>
-                </div>
-                <div class="card-body">
-                    <ul class="features-list">
-                        <li><i class="fas fa-check-circle"></i> Priority customer support</li>
-                        <li><i class="fas fa-check-circle"></i> Ad-free experience</li>
-                        <li><i class="fas fa-check-circle"></i> HD quality content</li>
-                        <li><i class="fas fa-check-circle"></i> Early access to new features</li>
-                        <li><i class="fas fa-check-circle"></i> Exclusive monthly updates</li>
-                    </ul>
-                </div>
-                <div class="card-footer">
-                    <button class="subscribe-btn premium-btn">Get Premium</button>
-                </div>
-            </div>
-            
-            <!-- Pro Plan -->
-            <div class="subscription-card pro-card">
-                <div class="card-header">
-                    <div class="plan-badge pro-badge">ULTIMATE</div>
-                    <h3 class="plan-title">Pro</h3>
-                    <div class="price-container">
-                        <p class="price monthly-price">¥ 2.000<span>/month</span></p>
-                        <p class="price yearly-price">¥ 10.000<span>/year</span></p>
-                    </div>
-                    <p class="card-description">Premium experience with advanced features</p>
-                </div>
-                <div class="card-body">
-                    <ul class="features-list">
-                        <li><i class="fas fa-check-circle"></i> All Premium features</li>
-                        <li><i class="fas fa-check-circle"></i> 24/7 dedicated support</li>
-                        <li><i class="fas fa-check-circle"></i> 4K Ultra-HD quality</li>
-                        <li><i class="fas fa-check-circle"></i> Unlimited downloads</li>
-                        <li><i class="fas fa-check-circle"></i> Exclusive Pro members events</li>
-                        <li><i class="fas fa-check-circle"></i> Custom profile themes</li>
-                        <li><i class="fas fa-check-circle"></i> Advanced analytics dashboard</li>
-                    </ul>
-                </div>
-                <div class="card-footer">
-                    <button class="subscribe-btn pro-btn">Get Pro</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="testimonials">
-            <div class="testimonial">
-                <div class="testimonial-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Upgrading to Premium was the best decision I made. The features are incredible and worth every penny!"</p>
-                <p class="testimonial-author">- Ardy L G Sihombing</p>
-            </div>
-        </div>
-        
-        <div class="faq-section">
-            <h3 class="faq-title">Frequently Asked Questions</h3>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>How do I upgrade my subscription?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Simply click on the "Get Premium" or "Get Pro" button and follow the checkout process. You'll be upgraded instantly.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Can I switch between plans?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, you can upgrade or downgrade your plan at any time. Changes will take effect in your next billing cycle.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Is there a refund policy?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We offer a 14-day money-back guarantee if you're not satisfied with your subscription.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-</section>
-        </div>
-    </div>
-    
+
     <script>
         // Get audio element and control buttons
         const audio = document.getElementById('background-music');
@@ -713,7 +479,7 @@
         const playIcon = document.getElementById('play-icon');
         const volumeBtn = document.getElementById('volume-btn');
         const volumeIcon = document.getElementById('volume-icon');
-        
+
         // Function to play music automatically after welcome animation
         function playMusic() {
             audio.volume = 0.5; // Set initial volume to 50%
@@ -727,10 +493,10 @@
                 // Keep the play icon as is
             });
         }
-        
+
         // Trigger music after welcome animation ends
         setTimeout(playMusic, 4000);
-        
+
         // Toggle play/pause
         playPauseBtn.addEventListener('click', function() {
             if (audio.paused) {
@@ -743,7 +509,7 @@
                 playIcon.classList.add('fa-play');
             }
         });
-        
+
         // Toggle mute/unmute
         let previousVolume = 0.5;
         volumeBtn.addEventListener('click', function() {
@@ -758,12 +524,12 @@
                 volumeIcon.classList.add('fa-volume-up');
             }
         });
-        
+
         // Create confetti effect
         function createConfetti() {
             const colors = ['#f00', '#0f0', '#00f', '#ff0', '#0ff', '#f0f'];
             const confettiCount = 100;
-            
+
             for (let i = 0; i < confettiCount; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
@@ -772,11 +538,11 @@
                 confetti.style.top = -20 + 'px';
                 confetti.style.opacity = '1';
                 document.body.appendChild(confetti);
-                
+
                 // Animate confetti
                 const animationDuration = Math.random() * 2 + 1;
                 confetti.style.animation = `fall ${animationDuration}s linear forwards`;
-                
+
                 // Create keyframes for falling animation
                 const keyframes = `
                     @keyframes fall {
@@ -790,12 +556,12 @@
                         }
                     }
                 `;
-                
+
                 // Add keyframes to document
                 const styleSheet = document.createElement('style');
                 styleSheet.textContent = keyframes;
                 document.head.appendChild(styleSheet);
-                
+
                 // Remove confetti after animation
                 setTimeout(() => {
                     confetti.remove();
@@ -803,41 +569,41 @@
                 }, animationDuration * 1000);
             }
         }
-        
+
         // Trigger confetti after welcome animation
         setTimeout(createConfetti, 2000);
-        
+
         // Add 3D tilt effect to social buttons
         const buttons = document.querySelectorAll('.social-button');
-        
+
         buttons.forEach(button => {
             button.addEventListener('mousemove', (e) => {
                 const rect = button.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
+
                 const xRotation = (y - rect.height / 2) / (rect.height / 2) * 10;
                 const yRotation = (x - rect.width / 2) / (rect.width / 2) * -10;
-                
+
                 button.style.transform = `perspective(1000px) rotateX(${xRotation}deg) rotateY(${yRotation}deg) translateZ(10px)`;
             });
-            
+
             button.addEventListener('mouseout', () => {
                 button.style.transform = 'perspective(1000px)';
             });
         });
-        
+
         // Real-time clock functionality
         function updateClock() {
             const now = new Date();
-            
+
             // Format time: HH:MM:SS
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             const timeString = `${hours}:${minutes}:${seconds}`;
-            
-            // Format date: Weekday, Month Day, Year
+
+                        // Format date: Weekday, Month Day, Year
             const options = { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -845,93 +611,15 @@
                 day: 'numeric' 
             };
             const dateString = now.toLocaleDateString('en-US', options);
-            
+
             // Update the DOM
             document.getElementById('clock').textContent = timeString;
             document.getElementById('date').textContent = dateString;
         }
-        
+
         // Update clock immediately and then every second
         updateClock();
         setInterval(updateClock, 1000);
-
-// Toggle between monthly and yearly pricing
-    const billingToggle = document.getElementById('billing-toggle');
-    const monthlyPrices = document.querySelectorAll('.monthly-price');
-    const yearlyPrices = document.querySelectorAll('.yearly-price');
-    
-    billingToggle.addEventListener('change', function() {
-        if (this.checked) {
-            // Yearly billing
-            monthlyPrices.forEach(price => price.style.display = 'none');
-            yearlyPrices.forEach(price => price.style.display = 'block');
-        } else {
-            // Monthly billing
-            monthlyPrices.forEach(price => price.style.display = 'block');
-            yearlyPrices.forEach(price => price.style.display = 'none');
-        }
-    });
-    
-    // FAQ Accordion
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        
-        question.addEventListener('click', () => {
-            // Close all other items
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                }
-            });
-            
-            // Toggle current item
-            item.classList.toggle('active');
-        });
-    });
-    
-    // Subtle animation for cards on scroll
-    function isElementInViewport(el) {
-        const rect = el.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-    
-    function animateOnScroll() {
-        const cards = document.querySelectorAll('.subscription-card');
-        
-        cards.forEach((card, index) => {
-            if (isElementInViewport(card)) {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = card.classList.contains('pro-card') 
-                        ? 'scale(1.05) translateY(0)' 
-                        : 'translateY(0)';
-                }, index * 200);
-            }
-        });
-    }
-    
-    // Initial styles for animation
-    document.addEventListener('DOMContentLoaded', () => {
-        const cards = document.querySelectorAll('.subscription-card');
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(50px)';
-            card.style.transition = 'all 0.7s ease';
-        });
-        
-        // Trigger initial animation
-        setTimeout(animateOnScroll, 500);
-        
-        // Add scroll event listener
-        window.addEventListener('scroll', animateOnScroll);
-    });
-    </script>
+        </script>
 </body>
 </html>
