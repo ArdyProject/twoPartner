@@ -6,6 +6,277 @@
     <title>By Ardy Editz Code Program</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+    
+    
+    .subscription-section {
+        padding: 4rem 2rem;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .subscription-container {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .section-title {
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .section-description {
+        color: white;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .toggle-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 3rem;
+    }
+    
+    .toggle-label {
+        color: white;
+        margin: 0 10px;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+    }
+    
+    .save-label {
+        background-color: rgba(255, 0, 0, 0.3);
+        color: white;
+        font-size: 0.7rem;
+        padding: 2px 8px;
+        border-radius: 10px;
+        margin-left: 5px;
+    }
+    
+    .toggle {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 30px;
+    }
+    
+    .toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.3);
+        transition: .4s;
+        border-radius: 34px;
+    }
+    
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+        background-color: rgba(255, 0, 0, 0.6);
+    }
+    
+    input:checked + .slider:before {
+        transform: translateX(30px);
+    }
+    
+    .plans-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .plan-card {
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 2rem;
+        width: 100%;
+        max-width: 300px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .plan-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .recommended {
+        border: 2px solid rgba(255, 0, 0, 0.6);
+        transform: scale(1.05);
+        z-index: 1;
+    }
+    
+    .recommended:hover {
+        transform: translateY(-10px) scale(1.05);
+    }
+    
+    .recommended-badge {
+        background-color: rgba(255, 0, 0, 0.8);
+        color: white;
+        font-size: 0.8rem;
+        font-weight: bold;
+        padding: 5px 15px;
+        border-radius: 20px;
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .plan-header {
+        margin-bottom: 2rem;
+    }
+    
+    .plan-title {
+        color: white;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .plan-price {
+        margin-bottom: 1rem;
+        color: white;
+    }
+    
+    .price {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+    
+    .period {
+        font-size: 1rem;
+        opacity: 0.8;
+    }
+    
+    .plan-description {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+    }
+    
+    .plan-features {
+        margin-bottom: 2rem;
+    }
+    
+    .feature-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        color: white;
+        text-align: left;
+    }
+    
+    .feature-item i {
+        margin-right: 10px;
+        font-size: 1rem;
+    }
+    
+    .feature-item.disabled {
+        opacity: 0.5;
+    }
+    
+    .plan-button {
+        background: linear-gradient(135deg, rgba(255, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+        color: white;
+        padding: 12px 25px;
+        border-radius: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .plan-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .guarantee {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-top: 2rem;
+    }
+    
+    .guarantee i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+    }
+    
+    /* Hide yearly prices by default */
+    .plan-price.yearly {
+        display: none;
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+        .plans-container {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .plan-card {
+            max-width: 350px;
+        }
+        
+        .recommended {
+            transform: scale(1);
+        }
+        
+        .recommended:hover {
+            transform: translateY(-10px);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .plan-card {
+            padding: 1.5rem;
+        }
+        
+        .price {
+            font-size: 2rem;
+        }
+    }
+    
+    
+    
         * {
             margin: 0;
             padding: 0;
@@ -469,6 +740,116 @@
                     <a href="hbdhelmy.html" class="myButton">HBD<br>30-11-2005</a>
                 </div>
             </div>
+              <!-- Subscription Plans Section -->
+<section class="subscription-section">
+    <div class="subscription-container">
+        <h2 class="section-title">Choose Your Plan</h2>
+        <p class="section-description">Select the perfect plan that fits your needs and unlock amazing features</p>
+        
+        <div class="toggle-container">
+            <span class="toggle-label">Monthly</span>
+            <label class="toggle">
+                <input type="checkbox" id="billing-toggle">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label">Yearly <span class="save-label">Save 20%</span></span>
+        </div>
+        
+        <div class="plans-container">
+<!-- Premium Plan -->
+            <div class="plan-card recommended">
+                <div class="recommended-badge">POPULAR</div>
+                <div class="plan-header">
+                    <h3 class="plan-title">Premium</h3>
+                    <div class="plan-price monthly">
+                        <span class="price">¥9.500</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <div class="plan-price yearly">
+                        <span class="price">¥91.200</span>
+                        <span class="period">/year</span>
+                    </div>
+                    <p class="plan-description">Perfect for content creators</p>
+                </div>
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Everything in Free</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Custom branding</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Premium templates</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Basic analytics</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Email support</span>
+                    </div>
+                    <div class="feature-item disabled">
+                        <i class="fas fa-times"></i>
+                        <span>Advanced features</span>
+                    </div>
+                </div>
+                <a href="#erorr" class="plan-button">Upgrade Now</a>
+            </div>
+            
+            <!-- Pro Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-title">Pro</h3>
+                    <div class="plan-price monthly">
+                        <span class="price">¥18.900</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <div class="plan-price yearly">
+                        <span class="price">¥181.440</span>
+                        <span class="period">/year</span>
+                    </div>
+                    <p class="plan-description">For serious professionals</p>
+                </div>
+                <div class="plan-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Everything in Premium</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Advanced analytics</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>White-label solutions</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Unlimited customization</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>Priority 24/7 support</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check"></i>
+                        <span>API access</span>
+                    </div>
+                </div>
+                <a href="#erorr" class="plan-button">Go Pro</a>
+            </div>
+        </div>
+        
+        <div class="guarantee">
+            <i class="fas fa-shield-alt"></i>
+            <p>30-day money-back guarantee. Cancel anytime.</p>
+        </div>
+    </div>
+</section>
         </div>
     </div>
 
@@ -603,7 +984,7 @@
             const seconds = String(now.getSeconds()).padStart(2, '0');
             const timeString = `${hours}:${minutes}:${seconds}`;
 
-                        // Format date: Weekday, Month Day, Year
+            // Format date: Weekday, Month Day, Year
             const options = { 
                 weekday: 'long', 
                 year: 'numeric', 
@@ -620,6 +1001,23 @@
         // Update clock immediately and then every second
         updateClock();
         setInterval(updateClock, 1000);
+        
+            // Toggle between monthly and yearly billing
+    const billingToggle = document.getElementById('billing-toggle');
+    const monthlyPrices = document.querySelectorAll('.plan-price.monthly');
+    const yearlyPrices = document.querySelectorAll('.plan-price.yearly');
+    
+    billingToggle.addEventListener('change', function() {
+        if (this.checked) {
+            // Yearly billing
+            monthlyPrices.forEach(price => price.style.display = 'none');
+            yearlyPrices.forEach(price => price.style.display = 'block');
+        } else {
+            // Monthly billing
+            monthlyPrices.forEach(price => price.style.display = 'block');
+            yearlyPrices.forEach(price => price.style.display = 'none');
+        }
+    });
         </script>
 </body>
 </html>
