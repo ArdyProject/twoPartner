@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil BerDua haha</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <style>
+    .image-container {
+            margin-bottom: 30px;
+            background-color: black;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .image-wrapper {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        .image-wrapper img {
+            width: 100%;
+            border-radius: 6px;
+            display: block;
+        }
+        .image-caption {
+            background-color: #f8f8f8;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #ddd;
+            margin-top: 10px;
+        }
+        .caption-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .caption-text {
+            color: #555;
+            line-height: 1.5;
+        }
+        .status-indicator {
+            display: inline-block;
+            background-color: #ffd700;
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        :root {
+            --bg-color: #f0f4ff;
+            --text-color: #121726;
+            --accent-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --footer-bg: #121726;
+            --footer-text: #f0f4ff;
+            --chart-bar: rgba(67, 97, 238, 0.7);
+            --chart-border: #4361ee;
+        }
+
+        .dark-mode {
+            --bg-color: #121726;
+            --text-color: #f0f4ff;
+            --accent-color: #4cc9f0;
+            --secondary-color: #7209b7;
+            --card-bg: rgba(26, 32, 53, 0.85);
+            --footer-bg: #060913;
+            --footer-text: #f0f4ff;
+            --chart-bar: rgba(76, 201, 240, 0.7);
+            --chart-border: #4cc9f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid var(--accent-color);
+            margin-bottom: 20px;
+            background-color: #ddd;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .profile-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .profile-description {
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .stats-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 60px 0 30px;
+            position: relative;
+            overflow: hidden;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .footer-col p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: var(--footer-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 3D Elements */
+        .cube {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            transform-style: preserve-3d;
+            animation: rotateCube 20s infinite linear;
+        }
+
+        .cube-1 {
+            bottom: 100px;
+            left: 10%;
+        }
+
+        .cube-2 {
+            top: 150px;
+            right: 15%;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent-color);
+            opacity: 0.6;
+        }
+
+        .cube-face:nth-child(1) {
+            transform: translateZ(30px);
+        }
+
+        .cube-face:nth-child(2) {
+            transform: rotateY(180deg) translateZ(30px);
+        }
+
+        .cube-face:nth-child(3) {
+            transform: rotateY(90deg) translateZ(30px);
+        }
+
+        .cube-face:nth-child(4) {
+            transform: rotateY(-90deg) translateZ(30px);
+        }
+
+        .cube-face:nth-child(5) {
+            transform: rotateX(90deg) translateZ(30px);
+        }
+
+        .cube-face:nth-child(6) {
+            transform: rotateX(-90deg) translateZ(30px);
+        }
+
+        @keyframes rotateCube {
+            0% {
+                transform: rotateX(0) rotateY(0) rotateZ(0);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: #00ccff;
+            transform: translateY(-3px);
+        }
+        
+        .facebook:hover {
+            background: #3b5998;
+        }
+        
+        .twitter:hover {
+            background: #1da1f2;
+        }
+        
+        .instagram:hover {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        
+        .linkedin:hover {
+            background: #0077b5;
+        }
+        
+        .github:hover {
+            background: #333;
+        }
+        
+        .youtube:hover {
+            background: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">PROFILE</div>
+            <button id="theme-toggle" class="theme-toggle">
+                <span id="theme-icon">🌙</span>
+                <span id="theme-text">Dark Mode</span>
+            </button>
+        </header>
+
+        <div class="profile-section">
+            <div class="profile-card">
+                <img src="ardy.jpg" alt="Profile Image" class="profile-image">
+                <h1 class="profile-name">Ardy L G Sihombing</h1>
+                <h2 class="profile-title">Web Designer.</h2>
+                <p class="profile-description">
+                  1 Timotius 4:12 (TB)<br>Jangan seorang pun menganggap engkau rendah karena engkau muda. Jadilah teladan bagi orang-orang percaya, dalam perkataanmu, dalam tingkah lakumu, dalam kasihmu, dalam kesetiaanmu dan dalam kesucianmu.
+                </p>
+               <div class="social-links">
+                    <a href="https://wa.link/63hufc" target="_blank" class="social-link facebook"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61573416713648" target="_blank" class="social-link twitter"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/qrdy_hutqsoit09?igsh=MW0zYmpiZjZqaHVoZQ==" target="_blank" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@qrdy_hutqsoit09?_t=ZS-8vE0zNv60x6&_r=1" target="_blank" class="social-link linkedin"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://youtube.com/@ardylgsihombing?si=K0IujVADORnRdnoo" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+                        <div class="profile-card">
+                <img src="helmy.jpg" alt="Profile Image" class="profile-image">
+                <h1 class="profile-name">Helmy R Tampubolon</h1>
+                <h2 class="profile-title">Suport System</h2>
+                <p class="profile-description">
+                  Roma 12:12 (TB)<br>Bersukacitalah dalam pengharapan, sabarlah dalam kesesakan, dan bertekunlah dalam doa!.
+                </p>
+            
+                <div class="social-links">
+                    <a href="https://wa.link/oljamw" target="_blank" class="social-link twitter"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100042542872095" target="_blank" class="social-link linkedin"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/_emyaatpb?igsh=Ymh2Nmk0d2ZlZXZy" target="_blank" class="social-link github"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@emytampubolon?_t=ZS-8vEomc1CAnQ&_r=1" target="_blank" class="social-link youtube"><i class="fab fa-tiktok"></i></a>
+                </div>
+                </div>
+
+            <div class="profile-card">
+                <h2 class="section-title">Veri terbaru 2025</h2>
+                <p class="profile-description">
+                    <strong>✓ Sudah Suport Mode Dark/Light<br>
+                    <strong>✓</strong> Background Lebih Mantap<br>
+                    <strong>✓</strong> Ui/Ux Yang Lebih Elegant<br>
+                    <strong>✓</strong> Nyaman Dimata<br>
+                    <strong>✓</strong> Fitur Device Analic (Secara RealTime Menganalisis Device Yang Mengunjungi Website.
+                </p>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h2 class="section-title">Visitor Analytics</h2>
+            <p>Tracking device visits in real-time:</p>
+            <canvas id="visitorChart" width="760" height="600"></canvas>
+        </div>
+        </div>
+    
+        <h1>Keterangan Gambar (Sebelum Diupdate)</h1>
+     <div class="profile-card">
+    <div class="image-container">
+        <div class="status-indicator">Update Before</div>
+        <div class="image-wrapper">
+            <img src="ss.jpg" alt="Image">
+        </div>
+        </divv>
+        <div class="image-caption">
+            <div class="caption-title">Keterangan:</div>
+            <div class="caption-text">
+                Ini tampilan website (2024) sebelum di update ke versi terbaru (2025) by Ardy King Project.<br><br>X Belum Suport Tema Dark/Light Mode.<br>X Belum Suport Device Analitic Pengunjung.<br>X Effect Background Kurang.
+            </div>
+        </div>
+        </div>
+        </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Jasa Edit Web:</h3>
+                    <p>KAMI MEMBUKA JASA EDIT LINKTREE. ANDA DAPAT MENGUBUNGI KAMI MELALUI EMAIL DIBAWAH ATAU BISA LEWAT AKUN SOSIAL MEDIA SAYA DI PALING ATAS.<br>JASA EDIT DENGAN HSRGA TERJANGKAU BERKISAR RP.20.000/WEBSITE(PERMANEN) DI JAMIN AMANAH DAN AMAN DI KANTONG<BR>TERIMAKASIH.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <p>Email: ardysihombing2006@gmail.com</p>
+                    <p>Phone: Not Available.</p>
+                    <p>Location: Prefektur Ibaraki (茨城県), Kantō, Honshu, Jepang.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Follow Me</h3>
+                    <div class="social-links">
+                        <a href="https://youtube.com/@ardylgsihombing?si=VmQs7IKMgSQbn_A0" aria-label="Youtube">You</a>
+                        <a href="jdjjdj" aria-label="LinkedIn">Lin</a>
+                        <a href="https://github.com/ArdyProject" aria-label="GitHub">Git</a>
+                        <a href="https://www.instagram.com/qrdy_hutqsoit09?igsh=MW0zYmpiZjZqaHVoZQ==" aria-label="Instagram">Ins</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Ardy King Project | All rights reserved.
+            </div>
+        </div>
+
+        <!-- 3D Decorative Elements -->
+        <div class="cube cube-1">
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+        </div>
+        <div class="cube cube-2">
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+            <div class="cube-face"></div>
+        </div>
+    </footer>
+
+    <script>
+        // Three.js Background Animation
+        let scene, camera, renderer;
+        let particles;
+
+        function initThree() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 50;
+
+            renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            // Create particles
+            const geometry = new THREE.BufferGeometry();
+            const count = 1500;
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+
+            for (let i = 0; i < count * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 100;
+                positions[i + 1] = (Math.random() - 0.5) * 100;
+                positions[i + 2] = (Math.random() - 0.5) * 50;
+
+                colors[i] = Math.random();
+                colors[i + 1] = Math.random();
+                colors[i + 2] = Math.random();
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.5,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            particles.rotation.x += 0.0005;
+            particles.rotation.y += 0.001;
+
+            renderer.render(scene, camera);
+        }
+
+        // Handle Window Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        let isDarkMode = false;
+
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light Mode';
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark Mode';
+            }
+            updateChartColors();
+        });
+
+        // Visitor Chart
+        let visitorChart;
+        const deviceTypes = ['Desktop', 'Mobile', 'Tablet', 'Other'];
+        let visitorData = [0, 0, 0, 0];
+        let visitHistory = Array(20).fill().map(() => ({
+            Desktop: 0,
+            Mobile: 0,
+            Tablet: 0,
+            Other: 0
+        }));
+
+        function initChart() {
+            const ctx = document.getElementById('visitorChart').getContext('2d');
+            visitorChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: deviceTypes,
+                    datasets: [{
+                        label: 'Device Visits',
+                        data: visitorData,
+                        backgroundColor: 'rgba(67, 97, 238, 0.7)',
+                        borderColor: '#4361ee',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChartColors() {
+            const isDark = document.body.classList.contains('dark-mode');
+            visitorChart.data.datasets[0].backgroundColor = isDark ? 'rgba(76, 201, 240, 0.7)' : 'rgba(67, 97, 238, 0.7)';
+            visitorChart.data.datasets[0].borderColor = isDark ? '#4cc9f0' : '#4361ee';
+            visitorChart.update();
+        }
+
+        function simulateVisit() {
+            // Detect actual device type - this is simplified
+            let deviceType;
+            const width = window.innerWidth;
+            if (width < 768) {
+                deviceType = 'Mobile';
+            } else if (width < 1024) {
+                deviceType = 'Tablet';
+            } else {
+                deviceType = 'Desktop';
+            }
+            
+            // Record the visit
+            const index = deviceTypes.indexOf(deviceType);
+            if (index !== -1) {
+                visitorData[index]++;
+            } else {
+                visitorData[3]++; // Other
+            }
+            
+            // Update chart
+            visitorChart.data.datasets[0].data = visitorData;
+            visitorChart.update();
+        }
+
+        // Generate random visits
+        function simulateRandomVisit() {
+            const randomDevice = Math.floor(Math.random() * deviceTypes.length);
+            visitorData[randomDevice]++;
+            visitorChart.data.datasets[0].data = visitorData;
+            visitorChart.update();
+            
+            // Schedule next update
+            setTimeout(simulateRandomVisit, Math.random() * 3000 + 1000);
+        }
+
+        // Initialize everything
+        window.addEventListener('load', () => {
+            initThree();
+            initChart();
+            simulateVisit(); // Record the current user's visit
+            simulateRandomVisit(); // Start generating random visits
+        });
+    </script>
+</body>
+</html>
