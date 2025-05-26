@@ -1,294 +1,1054 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pasti Anak Pintar</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f0f3e, #001f3f);
-      color: white;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }.card {
-  perspective: 1000px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(0, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 0 80px rgba(0, 255, 255, 0.3);
-  backdrop-filter: blur(20px);
-  transform-style: preserve-3d;
-  transform: rotateX(15deg) rotateY(10deg) scale(1.05);
-  transition: transform 0.5s ease, opacity 0.5s;
-  animation: float 3s ease-in-out infinite;
-  min-width: 320px;
-}
-
-.fade-out {
-  opacity: 0;
-  transform: rotateX(60deg) scale(0.9);
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotateX(15deg) rotateY(10deg) scale(1.05); }
-  50% { transform: translateY(-10px) rotateX(10deg) rotateY(15deg) scale(1.07); }
-}
-
-select, input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 10px;
-  border: none;
-  font-size: 14px;
-  background: rgba(0, 255, 255, 0.1);
-  color: white;
-}
-
-.btn {
-  padding: 12px;
-  background: linear-gradient(90deg, #00f2ff, #00ffc3, Blue);
-  color: black;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  width: 100%;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.btn:hover {
-  background: linear-gradient(90deg, blue, #00ffc3, #00f2ff);
-}
-
-.result {
-  text-align: center;
-  font-size: 20px;
-  margin-top: 20px;
-  min-height: 40px;
-}
-
-.correct {
-  color: yellow;
-  animation: glow 1s ease forwards;
-}
-
-.wrong {
-  color: #ff4f4f;
-  animation: shake 0.6s;
-}
-
-.loading {
-  text-align: center;
-  font-size: 18px;
-  margin-top: 20px;
-  color: red;
-  animation: blink 1.2s infinite;
-}
-
-@keyframes glow {
-  0% { text-shadow: 0 0 5px #00ffae; }
-  100% { text-shadow: 0 0 20px #00ffae, 0 0 30px #00ffae; }
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-8px); }
-  40% { transform: translateX(8px); }
-  60% { transform: translateX(-8px); }
-  80% { transform: translateX(8px); }
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-.timer {
-  font-size: 16px;
-  margin-top: 10px;
-  text-align: center;
-  color: #aaa;
-}
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Money Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: skyblue;
+            --secondary: black;
+            --success: #10b981;
+            --danger: #f43f5e;
+            --warning: #f59e0b;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+        
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: slideInDown 0.6s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, red, green);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(255,255,255,0.3);
+        }
+        
+        .balance-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            animation: slideInUp 0.6s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .balance-amount {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .target-progress {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            height: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), yellow);
+            border-radius: 10px;
+            transition: width 0.8s ease;
+            box-shadow: 0 0 15px rgba(16,185,129,0.5);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 5px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            transform: scale(1.02);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .tab-content.active { display: block; }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(102,126,234,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before { left: 100%; }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .history-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: slideInLeft 0.4s ease;
+        }
+        
+        .history-income { border-left: 4px solid var(--success); }
+        .history-expense { border-left: 4px solid var(--danger); }
+        
+        .history-info h4 {
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        
+        .history-info small {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .history-amount {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .income { color: var(--success); }
+        .expense { color: var(--danger); }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: scaleIn 0.4s ease;
+        }
+        
+        .congrats {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1001;
+            animation: slideInDown 0.4s ease;
+        }
+        
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+            from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+    </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <h2>Ini Adalah Verifikasi<br>Pilih Jenis Soal mu☠️</h2>
-   <select id="typeSelect">
-  <option value="math">Matematika</option>
-  <option value="japanese">Bahasa Jepang</option>
-  <option value="geography">Geografi</option>
-  <option value="history">Sejarah</option>
-  <option value="science">Sains</option>
-  <option value="literature">Sastra</option>
-  <option value="technology">Teknologi</option>
-  <option value="bahasa_indonesia">Bahasa Indonesia</option>
-  <option value="general_knowledge">Pengetahuan Umum</option>
-</select>
-    <div id="questionContainer"></div>
-    <input type="text" id="answer" placeholder="Jawaban Anda..." />
-    <button class="btn" onclick="checkAnswer()">Verifikasi</button>
-    <div class="timer" id="timer"></div>
-    <div class="result" id="result"></div>
-  </div><audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-2.mp3"></audio> <audio id="errorSound" src="https://www.soundjay.com/buttons/sounds/button-14.mp3"></audio>
-
-  <script>
-    const questions = {
-  math: [
-    { question: "12 x 3?", answer: "36" },
-    { question: "15 + 27?", answer: "42" },
-    { question: "9²=", answer: "81" },
-    { question: "Berapa akar kuadrat dari 144?", answer: "12" },
-    { question: "50:5?", answer: "10" },
-    { question: "18 x 7?", answer: "126" },
-    { question: "11²=", answer: "121" },
-    { question: "Berapa hasil dari 72 - 45?", answer: "27" },
-    { question: "Berapakah 3 pangkat 4?", answer: "81" },
-    { question: "Berapa keliling lingkaran dengan jari-jari 7 cm? (gunakan π = 3,14)", answer: "43,96 cm" }
-  ],
-  japanese: [
-    { question: "Apa arti dari 'こんにちは'?", answer: "halo" },
-    { question: "Apa arti dari 'さようなら'?", answer: "selamat tinggal" },
-    { question: "Apa arti dari 'ありがとう'?", answer: "terima kasih" },
-    { question: "Apa arti dari '私の名前は'?", answer: "nama saya adalah" },
-    { question: "Apa arti dari '日本語'?", answer: "bahasa Jepang" },
-    { question: "Apa arti dari '水'?", answer: "air" },
-    { question: "Apa arti dari '先生'?", answer: "guru" },
-    { question: "Apa arti dari '学生'?", answer: "pelajar/mahasiswa" }
-  ],
-  geography: [
-    { question: "Apa ibu kota Indonesia?", answer: "IKN" },
-    { question: "Benua apa yang memiliki luas terbesar di dunia?", answer: "Asia" },
-    { question: "Di negara manakah Taj Mahal berada?", answer: "India" },
-    { question: "Sungai terpanjang di dunia adalah?", answer: "Sungai Nil" },
-    { question: "Gunung tertinggi di Indonesia adalah?", answer: "Puncak Jaya" },
-    { question: "Pulau terbesar di Indonesia adalah?", answer: "Kalimantan" },
-    { question: "Negara terkecil di dunia adalah?", answer: "Vatikan" },
-    { question: "Danau terdalam di dunia adalah?", answer: "Danau Baikal" }
-  ],
-  history: [
-    { question: "Siapakah proklamator kemerdekaan Indonesia?", answer: "Soekarno dan Mohammad Hatta" },
-    { question: "Pada tahun berapakah Indonesia merdeka?", answer: "1945" },
-    { question: "Siapakah penemu Amerika?", answer: "Christopher Columbus" },
-    { question: "Siapakah penemu teori relativitas?", answer: "Albert Einstein" },
-    { question: "Perang Dunia II berakhir pada tahun?", answer: "1945" },
-    { question: "Siapakah presiden pertama Amerika Serikat?", answer: "George Washington" },
-    { question: "Kapan Revolusi Industri dimulai?", answer: "Akhir abad ke-18" }
-  ],
-  science: [
-    { question: "Apa rumus kimia air?", answer: "H2O" },
-    { question: "Apa satuan dasar massa dalam SI?", answer: "kilogram" },
-    { question: "Hukum gravitasi dikemukakan oleh?", answer: "Isaac Newton" },
-    { question: "Apa nama planet terbesar di tata surya kita?", answer: "Jupiter" },
-    { question: "Berapa jumlah unsur dalam tabel periodik modern?", answer: "118" },
-    { question: "Apa yang dipelajari dalam biologi?", answer: "Makhluk hidup" },
-    { question: "Apa simbol kimia untuk emas?", answer: "Au" },
-    { question: "Berapa kecepatan cahaya?", answer: "300.000 km/detik" }
-  ],
-  literature: [
-    { question: "Siapakah penulis novel 'Laskar Pelangi'?", answer: "Andrea Hirata" },
-    { question: "Siapa penulis drama 'Romeo dan Juliet'?", answer: "William Shakespeare" },
-    { question: "Siapa penulis novel '1984'?", answer: "George Orwell" },
-    { question: "Siapa penulis 'Harry Potter'?", answer: "J.K. Rowling" },
-    { question: "Novel 'Bumi Manusia' ditulis oleh?", answer: "Pramoedya Ananta Toer" }
-  ],
-  technology: [
-    { question: "Apa singkatan dari HTML?", answer: "Hypertext Markup Language" },
-    { question: "Siapa pendiri Microsoft?", answer: "Bill Gates" },
-    { question: "Apa sistem operasi yang dikembangkan oleh Apple?", answer: "macOS" },
-    { question: "Apa singkatan dari CPU?", answer: "Central Processing Unit" },
-    { question: "Bahasa pemrograman apa yang dikembangkan oleh Google untuk Android?", answer: "Kotlin" },
-    { question: "Apa itu AI?", answer: "Artificial Intelligence" },
-    { question: "Siapa yang menciptakan World Wide Web?", answer: "Tim Berners-Lee" }
-  ],
-  bahasa_indonesia: [
-    { question: "Apa lawan kata dari 'besar'?", answer: "kecil" },
-    { question: "Apa sinonim dari 'bahagia'?", answer: "senang" },
-    { question: "Apa antonim dari 'gelap'?", answer: "terang" },
-    { question: "Apa nama gaya bahasa yang menggunakan perbandingan dengan kata 'seperti' atau 'bagai'?", answer: "simile" },
-    { question: "Kata 'berlari' termasuk jenis kata apa?", answer: "kata kerja" }
-  ],
-  general_knowledge: [
-    { question: "Berapa jumlah provinsi di Indonesia?", answer: "38" },
-    { question: "Apa warna yang dihasilkan dari pencampuran merah dan biru?", answer: "ungu" },
-    { question: "Apa hewan tercepat di darat?", answer: "cheetah" },
-    { question: "Berapa jumlah hari dalam satu tahun kabisat?", answer: "366" },
-    { question: "Apa mata uang Jepang?", answer: "yen" },
-    { question: "Instrumen musik apa yang memiliki 88 kunci?", answer: "piano" },
-    { question: "Buah apa yang dijuluki 'king of fruits' di Asia Tenggara?", answer: "durian" }
-  ]
-};
-
-    const card = document.getElementById('card');
-    const questionContainer = document.getElementById('questionContainer');
-    const typeSelect = document.getElementById('typeSelect');
-    const result = document.getElementById('result');
-    const timer = document.getElementById('timer');
-    const successSound = document.getElementById('successSound');
-    const errorSound = document.getElementById('errorSound');
-    let currentQuestion = null;
-    let timerInterval = null;
-    let countdown = 10;
-
-    function loadQuestion() {
-      const type = typeSelect.value;
-      const questionList = questions[type];
-      currentQuestion = questionList[Math.floor(Math.random() * questionList.length)];
-
-      questionContainer.innerHTML = `<p class="loading">Memilih Soal...</p>`;
-      result.textContent = '2025 By Ardy';
-      result.className = 'result';
-      document.getElementById('answer').value = '';
-      timer.textContent = 'WAKTU ADA 20 Detik';
-
-      setTimeout(() => {
-        questionContainer.innerHTML = `<p>${currentQuestion.question}</p>`;
-        startTimer();
-      }, 3500);
-    }
-
-    function checkAnswer() {
-      clearInterval(timerInterval);
-      const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
-      if (!currentQuestion) return;
-      if (userAnswer === currentQuestion.answer.toLowerCase()) {
-        result.textContent = 'Wop Mantap Brayyyy';
-        result.className = 'result correct';
-        successSound.play();
-        card.classList.add('fade-out');
-        setTimeout(() => {
-          document.body.innerHTML = '<h1 style="text-align:center;margin:auto;color:#00ffc3;font-size:2rem;">Selamat datang di halaman utama!</h1><h4><a href="indexx.html" style="text-decoration:none;color:white;">Tekan Saya Untuk melanjut...</a><h4>';
-        }, 2400);
-      } else {
-        result.textContent = 'Yaelah Soal Gitu aja Jawabannya Salah wkwk';
-        result.className = 'result wrong';
-        errorSound.play();
-      }
-    }
-
-    function startTimer() {
-      countdown = 20;
-      timer.textContent = `Waktu tersisa: ${countdown} detik`;
-      timerInterval = setInterval(() => {
-        countdown--;
-        timer.textContent = `Waktu tersisa: ${countdown} detik`;
-        if (countdown <= 0) {
-          clearInterval(timerInterval);
-          result.textContent = 'Waktu Habis!';
-          result.className = 'result wrong';
-          errorSound.play();
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    
+    <div class="container">
+        <div class="header">
+            <h1>💰 Money Tracker</h1>
+        </div>
+        
+        <div class="balance-card">
+            <div class="balance-amount" id="balance">Rp 0</div>
+            <div style="font-size: 0.9rem; opacity: 0.8;">Saldo Saat Ini</div>
+            <div class="target-progress">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div style="font-size: 0.85rem; margin-top: 10px;">
+                Target: <span id="targetDisplay">Rp 0</span> (<span id="progressText">0%</span>)
+            </div>
+             <div style="font-size: 0.85rem; margin-top: 10px;"> App By <a href="https://www.instagram.com/namae_wa_ardy?igsh=YXo1aDI5czBzN3c=" target="_blank">@Ardy Hutasoit</a> </div>
+        </div>
+        
+        <div class="nav-tabs">
+            <div class="tab active" onclick="showTab('home')">🏠 Home</div>
+            <div class="tab" onclick="showTab('stats')">📊 Stats</div>
+            <div class="tab" onclick="showTab('charts')">📈 Grafik</div>
+            <div class="tab" onclick="showTab('history')">📝 Riwayat</div>
+            <div class="tab" onclick="showTab('settings')">⚙️ Setting</div>
+        </div>
+        
+        <!-- Home Tab -->
+        <div class="tab-content active" id="home">
+            <div class="form-group">
+                <label>💰 Jumlah</label>
+                <input type="number" id="amount" placeholder="0">
+            </div>
+            <div class="form-group">
+                <label>📝 Keterangan</label>
+                <input type="text" id="description" placeholder="Keterangan transaksi">
+            </div>
+            <div class="form-group">
+                <label>📂 Kategori</label>
+                <select id="category">
+                    <option value="Makanan">🍔 Makanan</option>
+                    <option value="Transport">🚗 Transport</option>
+                    <option value="Belanja">🛒 Belanja</option>
+                    <option value="Hiburan">🎮 Hiburan</option>
+                    <option value="Gaji">💼 Gaji</option>
+                    <option value="Bonus">🎁 Bonus</option>
+                    <option value="Lainnya">📦 Lainnya</option>
+                </select>
+            </div>
+            <button class="btn btn-success" onclick="addIncome()" style="margin-bottom: 10px;">
+                ➕ Tambah Pemasukan
+            </button>
+            <button class="btn btn-danger" onclick="addExpense()">
+                ➖ Tambah Pengeluaran
+            </button>
+        </div>
+        
+        <!-- Charts Tab -->
+        <div class="tab-content" id="charts">
+            <div class="chart-container">
+                <h3 style="text-align: center; margin-bottom: 20px; color: #fff;">💹 Visualisasi Keuangan</h3>
+                
+                <!-- Chart Type Selector -->
+                <div class="chart-selector" style="margin-bottom: 20px;">
+                    <select id="chartType" onchange="updateChart()" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
+                        <option value="pie">🥧 Pie Chart - Kategori Pengeluaran</option>
+                        <option value="bar">📊 Bar Chart - Pemasukan vs Pengeluaran</option>
+                        <option value="line">📈 Line Chart - Trend Saldo</option>
+                        <option value="doughnut">🍩 Doughnut Chart - Rasio Keuangan</option>
+                    </select>
+                </div>
+                
+                <!-- Chart Canvas -->
+                <div class="chart-wrapper" style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px);">
+                    <canvas id="myChart" width="400" height="300"></canvas>
+                </div>
+                
+                <!-- Chart Info -->
+                <div class="chart-info" style="margin-top: 15px; text-align: center; color: rgba(255,255,255,0.8);">
+                    <small>💡 Pilih jenis grafik di atas untuk melihat visualisasi yang berbeda</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats Tab -->
+        <div class="tab-content" id="stats">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value income" id="totalIncome">Rp 0</div>
+                    <div>Total Pemasukan</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value expense" id="totalExpense">Rp 0</div>
+                    <div>Total Pengeluaran</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="transactionCount">0</div>
+                    <div>Total Transaksi</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avgTransaction">Rp 0</div>
+                    <div>Rata-rata/Transaksi</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Tab -->
+        <div class="tab-content" id="history">
+            <button class="btn btn-danger" onclick="clearHistory()" style="margin-bottom: 20px;">
+                🗑️ Hapus Semua Riwayat
+            </button>
+            <div id="historyList">
+                <div class="empty-state">
+                    <div style="font-size: 3rem;">📝</div>
+                    <div>Belum ada riwayat transaksi</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div class="tab-content" id="settings">
+            <div class="form-group">
+                <label>🎯 Target Tabungan</label>
+                <input type="number" id="targetAmount" placeholder="0">
+            </div>
+            <button class="btn btn-primary" onclick="setTarget()">
+                💾 Simpan Target
+            </button>
+        </div>
+    </div>
+    
+    <!-- Congratulations Modal -->
+    <div class="modal" id="congratsModal">
+        <div class="modal-content">
+            <div class="congrats">🎉</div>
+            <h2>Selamat! 🎊</h2>
+            <p>Anda telah mencapai target tabungan!</p>
+            <button class="btn btn-success" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        let balance = 0;
+        let target = 0;
+        let transactions = [];
+        let theme = 'dark';
+        let myChart = null;
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            updateDisplay();
+            requestNotificationPermission();
+        });
+        
+        function loadData() {
+            // Data akan disimpan dalam memori selama sesi berlangsung
+            // Tidak ada data persistent untuk demo ini
+            balance = balance || 0;
+            target = target || 0;
+            transactions = transactions || [];
+            theme = theme || 'dark';
+            document.body.setAttribute('data-theme', theme);
+            updateThemeIcon();
         }
-      }, 1000);
-    }
-
-    typeSelect.addEventListener('change', loadQuestion);
-    window.onload = loadQuestion;
-  </script></body>
+        
+        function saveData() {
+            // Data disimpan dalam variabel global untuk sesi ini
+            // Dalam implementasi nyata, gunakan localStorage atau database
+            console.log('Data tersimpan dalam memori:', { balance, target, transactions: transactions.length });
+        }
+        
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+        
+        function addIncome() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const desc = document.getElementById('description').value;
+            const cat = document.getElementById('category').value;
+            
+            if (!amount || amount <= 0) {
+                showNotification('⚠️ Masukkan jumlah yang valid!', 'warning');
+                return;
+            }
+            
+            balance += amount;
+            transactions.unshift({
+                id: Date.now(),
+                type: 'income',
+                amount: amount,
+                description: desc || 'Pemasukan',
+                category: cat,
+                date: new Date().toLocaleDateString('id-ID')
+            });
+            
+            clearForm();
+            updateDisplay();
+            saveData();
+            showNotification('✅ Pemasukan berhasil ditambahkan!');
+            checkTarget();
+        }
+        
+        function addExpense() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const desc = document.getElementById('description').value;
+            const cat = document.getElementById('category').value;
+            
+            if (!amount || amount <= 0) {
+                showNotification('⚠️ Masukkan jumlah yang valid!', 'warning');
+                return;
+            }
+            
+            if (amount > balance) {
+                showNotification('⚠️ Saldo tidak mencukupi!', 'warning');
+                return;
+            }
+            
+            balance -= amount;
+            transactions.unshift({
+                id: Date.now(),
+                type: 'expense',
+                amount: amount,
+                description: desc || 'Pengeluaran',
+                category: cat,
+                date: new Date().toLocaleDateString('id-ID')
+            });
+            
+            clearForm();
+            updateDisplay();
+            saveData();
+            showNotification('✅ Pengeluaran berhasil dicatat!');
+        }
+        
+        function clearForm() {
+            document.getElementById('amount').value = '';
+            document.getElementById('description').value = '';
+        }
+        
+        function updateDisplay() {
+            document.getElementById('balance').textContent = formatCurrency(balance);
+            document.getElementById('targetDisplay').textContent = formatCurrency(target);
+            
+            const progress = target > 0 ? Math.min((balance / target) * 100, 100) : 0;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+            
+            updateStats();
+            updateHistory();
+            updateChart();
+        }
+        
+        function updateStats() {
+            const income = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+            const expense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+            const avg = transactions.length > 0 ? (income + expense) / transactions.length : 0;
+            
+            document.getElementById('totalIncome').textContent = formatCurrency(income);
+            document.getElementById('totalExpense').textContent = formatCurrency(expense);
+            document.getElementById('transactionCount').textContent = transactions.length;
+            document.getElementById('avgTransaction').textContent = formatCurrency(avg);
+        }
+        
+        function updateHistory() {
+            const historyList = document.getElementById('historyList');
+            
+            if (transactions.length === 0) {
+                historyList.innerHTML = `
+                    <div class="empty-state">
+                        <div style="font-size: 3rem;">📝</div>
+                        <div>Belum ada riwayat transaksi</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            historyList.innerHTML = transactions.map(t => `
+                <div class="history-item ${t.type === 'income' ? 'history-income' : 'history-expense'}">
+                    <div class="history-info">
+                        <h4>${t.description}</h4>
+                        <small>${t.category} • ${t.date}</small>
+                    </div>
+                    <div class="history-amount ${t.type === 'income' ? 'income' : 'expense'}">
+                        ${t.type === 'income' ? '+' : '-'}${formatCurrency(t.amount)}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function setTarget() {
+            const newTarget = parseFloat(document.getElementById('targetAmount').value);
+            if (!newTarget || newTarget <= 0) {
+                showNotification('⚠️ MASUKAN TARGET YANG VALID!', 'WARNING!!');
+                return;
+            }
+            
+            target = newTarget;
+            updateDisplay();
+            saveData();
+            showNotification('✅ TTARGET BERHASIL DISETTING');
+            document.getElementById('targetAmount').value = '';
+        }
+        
+        function checkTarget() {
+            if (target > 0 && balance >= target) {
+                showCongratsModal();
+                sendNotification('🎉 SELAMAT, TARGET TABUNGAN BERHASIL TERPENUHI. SILAHKAN BONGKAR CELENGAN ANDA WKWKWK');
+            }
+        }
+        
+        function showCongratsModal() {
+            document.getElementById('congratsModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('congratsModal').style.display = 'none';
+        }
+        
+        function clearHistory() {
+            if (confirm('SEMUA RIWAYAT AKAN DIHAPUS, TERMASUK SEMUA JUMLAH TRANSAKSI YAKIN?')) {
+                transactions = [];
+                // Reset balance juga karena riwayat dihapus
+                balance = 0;
+                updateDisplay();
+                saveData();
+                showNotification('✅ SEMUA RIWAYAT DAN TRANSAKSI BERHASIL DIHAPUS!!');
+            }
+        }
+        
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+            
+            // Update chart when charts tab is shown
+            if (tabName === 'charts') {
+                setTimeout(() => updateChart(), 100);
+            }
+        }
+        
+        function toggleTheme() {
+            theme = theme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', theme);
+            updateThemeIcon();
+            saveData();
+        }
+        
+        function updateThemeIcon() {
+            document.querySelector('.theme-toggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            if (type === 'warning') notification.style.background = 'var(--warning)';
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideInDown 0.4s ease reverse';
+                setTimeout(() => notification.remove(), 400);
+            }, 3000);
+        }
+        
+        function requestNotificationPermission() {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        }
+        
+        function sendNotification(message) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('Money Tracker', {
+                    body: message,
+                    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">💰</text></svg>'
+                });
+            }
+        }
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('congratsModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Auto-save on input changes
+        document.getElementById('amount').addEventListener('input', function() {
+            if (this.value < 0) this.value = 0;
+        });
+        
+        document.getElementById('targetAmount').addEventListener('input', function() {
+            if (this.value < 0) this.value = 0;
+        });
+        
+        // Chart Functions
+        function updateChart() {
+            const chartType = document.getElementById('chartType').value;
+            const ctx = document.getElementById('myChart').getContext('2d');
+            
+            // Destroy existing chart
+            if (myChart) {
+                myChart.destroy();
+            }
+            
+            const chartData = getChartData(chartType);
+            const chartConfig = getChartConfig(chartType, chartData);
+            
+            myChart = new Chart(ctx, chartConfig);
+        }
+        
+        function getChartData(type) {
+            const expenses = transactions.filter(t => t.type === 'expense');
+            const incomes = transactions.filter(t => t.type === 'income');
+            
+            switch(type) {
+                case 'pie':
+                    // Group expenses by category
+                    const categoryData = {};
+                    expenses.forEach(t => {
+                        categoryData[t.category] = (categoryData[t.category] || 0) + t.amount;
+                    });
+                    return {
+                        labels: Object.keys(categoryData),
+                        data: Object.values(categoryData),
+                        colors: ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#f97316', '#84cc16']
+                    };
+                    
+                case 'bar':
+                    const monthlyData = getMonthlyData();
+                    return {
+                        labels: monthlyData.labels,
+                        income: monthlyData.income,
+                        expense: monthlyData.expense
+                    };
+                    
+                case 'line':
+                    const balanceHistory = getBalanceHistory();
+                    return {
+                        labels: balanceHistory.labels,
+                        data: balanceHistory.data
+                    };
+                    
+                case 'doughnut':
+                    const totalIncome = incomes.reduce((sum, t) => sum + t.amount, 0);
+                    const totalExpense = expenses.reduce((sum, t) => sum + t.amount, 0);
+                    return {
+                        labels: ['Pemasukan', 'Pengeluaran', 'Sisa Saldo'],
+                        data: [totalIncome, totalExpense, balance],
+                        colors: ['#10b981', '#ef4444', '#8b5cf6']
+                    };
+                    
+                default:
+                    return { labels: [], data: [] };
+            }
+        }
+        
+        function getChartConfig(type, data) {
+            const baseConfig = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#fff' }
+                    }
+                }
+            };
+            
+            switch(type) {
+                case 'pie':
+                    return {
+                        type: 'pie',
+                        data: {
+                            labels: data.labels.length ? data.labels : ['Belum ada data'],
+                            datasets: [{
+                                data: data.data.length ? data.data : [1],
+                                backgroundColor: data.colors,
+                                borderColor: '#1e293b',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            ...baseConfig,
+                            plugins: {
+                                ...baseConfig.plugins,
+                                title: {
+                                    display: true,
+                                    text: '🥧 Pengeluaran per Kategori',
+                                    color: '#fff'
+                                }
+                            }
+                        }
+                    };
+                    
+                case 'bar':
+                    return {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels.length ? data.labels : ['Belum ada data'],
+                            datasets: [
+                                {
+                                    label: 'Pemasukan',
+                                    data: data.income || [0],
+                                    backgroundColor: '#10b981',
+                                    borderColor: '#059669',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Pengeluaran',
+                                    data: data.expense || [0],
+                                    backgroundColor: '#ef4444',
+                                    borderColor: '#dc2626',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            ...baseConfig,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: { color: '#fff' },
+                                    grid: { color: 'rgba(255,255,255,0.1)' }
+                                },
+                                x: {
+                                    ticks: { color: '#fff' },
+                                    grid: { color: 'rgba(255,255,255,0.1)' }
+                                }
+                            },
+                            plugins: {
+                                ...baseConfig.plugins,
+                                title: {
+                                    display: true,
+                                    text: '📊 Pemasukan vs Pengeluaran',
+                                    color: '#fff'
+                                }
+                            }
+                        }
+                    };
+                    
+                case 'line':
+                    return {
+                        type: 'line',
+                        data: {
+                            labels: data.labels.length ? data.labels : ['Hari ini'],
+                            datasets: [{
+                                label: 'Saldo',
+                                data: data.data.length ? data.data : [balance],
+                                borderColor: '#8b5cf6',
+                                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                                fill: true,
+                                tension: 0.4,
+                                pointBackgroundColor: '#8b5cf6',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2
+                            }]
+                        },
+                        options: {
+                            ...baseConfig,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: { color: '#fff' },
+                                    grid: { color: 'rgba(255,255,255,0.1)' }
+                                },
+                                x: {
+                                    ticks: { color: '#fff' },
+                                    grid: { color: 'rgba(255,255,255,0.1)' }
+                                }
+                            },
+                            plugins: {
+                                ...baseConfig.plugins,
+                                title: {
+                                    display: true,
+                                    text: '📈 Trend Saldo',
+                                    color: '#fff'
+                                }
+                            }
+                        }
+                    };
+                    
+                case 'doughnut':
+                    return {
+                        type: 'doughnut',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.data.every(d => d === 0) ? [1, 1, 1] : data.data,
+                                backgroundColor: data.colors,
+                                borderColor: '#1e293b',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            ...baseConfig,
+                            cutout: '60%',
+                            plugins: {
+                                ...baseConfig.plugins,
+                                title: {
+                                    display: true,
+                                    text: '🍩 Rasio Keuangan',
+                                    color: '#fff'
+                                }
+                            }
+                        }
+                    };
+            }
+        }
+        
+        function getMonthlyData() {
+            // Simplified monthly data - in real app, group by actual months
+            const last7Days = [];
+            const incomeData = [];
+            const expenseData = [];
+            
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                const dateStr = date.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' });
+                last7Days.push(dateStr);
+                
+                // Calculate income/expense for this day (simplified)
+                const dayIncome = transactions
+                    .filter(t => t.type === 'income' && t.date === date.toLocaleDateString('id-ID'))
+                    .reduce((sum, t) => sum + t.amount, 0);
+                    
+                const dayExpense = transactions
+                    .filter(t => t.type === 'expense' && t.date === date.toLocaleDateString('id-ID'))
+                    .reduce((sum, t) => sum + t.amount, 0);
+                    
+                incomeData.push(dayIncome);
+                expenseData.push(dayExpense);
+            }
+            
+            return {
+                labels: last7Days,
+                income: incomeData,
+                expense: expenseData
+            };
+        }
+        
+        function getBalanceHistory() {
+            // Simplified balance history
+            const history = [];
+            const labels = [];
+            let runningBalance = 0;
+            
+            // Sort transactions by date (oldest first)
+            const sortedTransactions = [...transactions].reverse();
+            
+            if (sortedTransactions.length === 0) {
+                return {
+                    labels: ['Sekarang'],
+                    data: [balance]
+                };
+            }
+            
+            sortedTransactions.forEach((transaction, index) => {
+                if (transaction.type === 'income') {
+                    runningBalance += transaction.amount;
+                } else {
+                    runningBalance -= transaction.amount;
+                }
+                
+                labels.push(`T${index + 1}`);
+                history.push(runningBalance);
+            });
+            
+            return {
+                labels: labels,
+                data: history
+            };
+        }
+    </script>
+</body>
 </html>
